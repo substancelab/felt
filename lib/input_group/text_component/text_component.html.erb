@@ -1,5 +1,5 @@
 <div class="<%= Felt.configuration.classes.dig(:input_group, :text_component) %>">
-  <%= form.label(attribute, :class => Felt.configuration.classes.dig(:input_group, :label)) %>
+  <%= form.label(attribute, label, :class => Felt.configuration.classes.dig(:input_group, :label)) %>
   <%= form.text_field(attribute, :class => Felt.configuration.classes.dig(:input_group, :input), :placeholder => placeholder) %>
   <% if hint? %><div class="<%= Felt.configuration.classes.dig(:input_group, :hint) %>"><%= hint %></div><% end %>
   <% errors.each do |error| %>

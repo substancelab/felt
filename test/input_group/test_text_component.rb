@@ -24,6 +24,15 @@ class Felt::InputGroup::TextComponentTest < ViewComponent::TestCase
     assert_selector("label[for=game_title]", text: "Title")
   end
 
+  def test_renders_provided_label
+    model = Game.new
+    form = build_form(model)
+
+    do_render(form, label: "This label")
+
+    assert_selector("label[for=game_title]", text: "This label")
+  end
+
   def test_renders_an_input_field
     model = Game.new
     form = build_form(model)
@@ -82,8 +91,9 @@ class Felt::InputGroup::TextComponentTest < ViewComponent::TestCase
     )
   end
 
-  def do_render(form)
-    render_inline(Felt::InputGroup::TextComponent.new(form: form, attribute: :title)).to_html
+  def do_render(form, **options)
+    component = Felt::InputGroup::TextComponent.new(form: form, attribute: :title, **options)
+    render_inline(component).to_html
   end
 
   def with_translations(translations)
