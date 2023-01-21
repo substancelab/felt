@@ -1,8 +1,8 @@
-<div class="w-full form-control">
-  <%= form.label(attribute, :class => "block font-medium text-gray-700") %>
-  <%= form.text_field(attribute, :class => "input input-bordered w-full my-2", :placeholder => placeholder) %>
-  <% if hint? %><div class="text-sm text-gray-500"><%= hint %></div><% end %>
+<div class="<%= Felt.configuration.classes.dig(:input_group, :text_component) %>">
+  <%= form.label(attribute, :class => Felt.configuration.classes.dig(:input_group, :label)) %>
+  <%= form.text_field(attribute, :class => Felt.configuration.classes.dig(:input_group, :input), :placeholder => placeholder) %>
+  <% if hint? %><div class="<%= Felt.configuration.classes.dig(:input_group, :hint) %>"><%= hint %></div><% end %>
   <% errors.each do |error| %>
-    <p class="mt-2 text-sm text-red-600"><%= error %></p>
+    <p class="<%= Felt.configuration.classes.dig(:input_group, :error) %>"><%= error %></p>
   <% end %>
 </div>
