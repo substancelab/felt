@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "view_component"
+
 module Felt
   module InputGroup
     class TextComponent < ViewComponent::Base
