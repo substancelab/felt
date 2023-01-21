@@ -72,6 +72,16 @@ class Felt::InputGroup::TextComponentTest < ViewComponent::TestCase
     assert_text("Hint from translations")
   end
 
+  def test_renders_errors_if_any
+    model = Game.new
+    model.errors.add(:title, :invalid)
+    form = build_form(model)
+
+    do_render(form)
+
+    assert_text("Title is invalid")
+  end
+
   private
 
   def build_form(model)
