@@ -104,7 +104,7 @@ module Felt
       end
 
       def translation_scope
-        [:forms, form.object_name, attribute]
+        [:forms, form.object_name, attribute].join(".")
       end
     end
   end
