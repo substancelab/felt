@@ -159,6 +159,15 @@ class Felt::InputGroup::TextComponentTest < ViewComponent::TestCase
     assert_css("input[type=text].error-class")
   end
 
+  def test_options_can_be_added_to_wrapping_element
+    model = Game.new
+    form = build_form(model)
+
+    do_render(form, id: "game-card")
+
+    assert_css("div#game-card")
+  end
+
   private
 
   def build_form(model)

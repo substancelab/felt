@@ -5,7 +5,7 @@ require "view_component"
 module Felt
   module InputGroup
     class TextComponent < ViewComponent::Base
-      attr_reader :attribute, :form
+      attr_reader :attribute, :form, :options
 
       # Returns the error messages to output in the input group. Returns [] if no
       # errors.
@@ -55,18 +55,22 @@ module Felt
       end
 
       # - hint: The hint for the input group. If not provided, the hint will be
-      #   looked up in the `forms.<object_name>.<attribute>` translation. See #hint
-      #   for more details. To disable the hint, pass an empty string.
+      #   looked up in the `forms.<object_name>.<attribute>` translation. See
+      #   #hint for more details. To disable the hint, pass an empty string.
       #
-      # - label: The label for the input group. If not provided, the label will be
-      #   looked up in the `forms.<object_name>.<attribute>` translation. See #label
-      #   for more details. To disable the label, pass an empty string.
+      # - label: The label for the input group. If not provided, the label will
+      #   be looked up in the `forms.<object_name>.<attribute>` translation. See
+      #   #label for more details. To disable the label, pass an empty string.
       #
       # - placeholder: The placeholder for the input field. If not provided, the
       #   placeholder will be looked up in the `forms.<object_name>.<attribute>`
       #   translation. See #placeholder for more details. To disable the
       #   placeholder, pass an empty string.
-      def initialize(attribute:, form:, help: nil, hint: nil, label: nil, placeholder: nil)
+      #
+      # All remaining keyword arguments are passed to the wrapping div element
+      # of the input group. See ActionView::Helpers::TagHelper#content_tag for
+      # details.
+      def initialize(attribute:, form:, help: nil, hint: nil, label: nil, placeholder: nil, **options)
         super
 
         @attribute = attribute
@@ -74,6 +78,7 @@ module Felt
         @help = help
         @hint = hint
         @label = label
+        @options = options.symbolize_keys.except(:attribute, :form)
         @placeholder = placeholder
       end
 
