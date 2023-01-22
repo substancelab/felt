@@ -7,6 +7,11 @@ module Felt
     class TextComponent < ViewComponent::Base
       attr_reader :attribute, :form, :options
 
+      # Returns the classes to use for the root element of the input.
+      def classes
+        Felt.configuration.classes.dig(:input_group, :text_component)
+      end
+
       # Returns the error messages to output in the input group. Returns [] if no
       # errors.
       #

@@ -168,6 +168,23 @@ class Felt::InputGroup::TextComponentTest < ViewComponent::TestCase
     assert_css("div#game-card")
   end
 
+  def test_uses_configured_classes_for_wrapping_element
+    model = Game.new
+    form = build_form(model)
+
+    Felt.configure do |config|
+      config.classes = {
+        input_group: {
+          text_component: "my-input-group"
+        }
+      }
+    end
+
+    do_render(form)
+
+    assert_css("div.my-input-group")
+  end
+
   private
 
   def build_form(model)
