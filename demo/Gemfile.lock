@@ -1,3 +1,10 @@
+PATH
+  remote: ..
+  specs:
+    felt (0.1.0)
+      i18n
+      view_component
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -189,6 +196,10 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
+    view_component (2.82.0)
+      activesupport (>= 5.2.0, < 8.0)
+      concurrent-ruby (~> 1.0)
+      method_source (~> 1.0)
     web-console (4.2.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -213,6 +224,7 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
+  felt!
   importmap-rails
   jbuilder
   puma (~> 5.0)
@@ -224,6 +236,7 @@ DEPENDENCIES
   stimulus-rails
   turbo-rails
   tzinfo-data
+  view_component
   web-console
   webdrivers
 
