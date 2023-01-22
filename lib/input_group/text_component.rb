@@ -21,6 +21,23 @@ module Felt
         errors.any?
       end
 
+      # Returns the help text for the input group. If no help is configured,
+      # returns nil.
+      #
+      # Help text is looked up in the following order:
+      #
+      # 1. The help argument passed to the component.
+      # 2. The `help` key in the `forms.<object_name>.<attribute>` translation.
+      def help
+        @help ||=
+          translate("help")
+      end
+
+      # Returns true if the input group has a hint configured
+      def help?
+        help.present?
+      end
+
       # Returns the hint for the input group. If no hint is configured, returns nil.
       #
       # Hints are looked up in the following order:
@@ -49,14 +66,28 @@ module Felt
       #   placeholder will be looked up in the `forms.<object_name>.<attribute>`
       #   translation. See #placeholder for more details. To disable the
       #   placeholder, pass an empty string.
-      def initialize(attribute:, form:, hint: nil, label: nil, placeholder: nil)
+      def initialize(attribute:, form:, help: nil, hint: nil, label: nil, placeholder: nil)
         super
 
         @attribute = attribute
         @form = form
+        @help = help
         @hint = hint
         @label = label
         @placeholder = placeholder
+      end
+
+      # Returns the classes to use for the input field. Use configuration from
+      # `input_group.input.invalid` if the input group has errors,
+      # `input_group.input.default` otherwise.
+      def input_classes
+        key = if errors?
+          :invalid
+        else
+          :default
+        end
+
+        Felt.configuration.classes.dig(:input_group, :input, key)
       end
 
       # Returns the label for the input group. If no label is configured, returns

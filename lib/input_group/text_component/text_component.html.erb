@@ -1,7 +1,8 @@
 <div class="<%= Felt.configuration.classes.dig(:input_group, :text_component) %>">
   <%= form.label(attribute, label, :class => Felt.configuration.classes.dig(:input_group, :label)) %>
-  <%= form.text_field(attribute, :class => Felt.configuration.classes.dig(:input_group, :input), :placeholder => placeholder) %>
   <% if hint? %><div class="<%= Felt.configuration.classes.dig(:input_group, :hint) %>"><%= hint %></div><% end %>
+  <%= form.text_field(attribute, :class => input_classes, :placeholder => placeholder) %>
+  <% if help? %><div class="<%= Felt.configuration.classes.dig(:input_group, :help) %>"><%= help %></div><% end %>
   <% errors.each do |error| %>
     <p class="<%= Felt.configuration.classes.dig(:input_group, :error) %>"><%= error %></p>
   <% end %>

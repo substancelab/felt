@@ -52,6 +52,63 @@ class Felt::InputGroup::TextComponentTest < ViewComponent::TestCase
     assert(page.has_field?("game[title]", with: "Dead Cells"))
   end
 
+  def test_uses_configured_classes_for_input
+    model = Game.new
+    form = build_form(model)
+
+    Felt.configure do |config|
+      config.classes = {
+        input_group: {
+          input: {
+            default: "input-field"
+          }
+        }
+      }
+    end
+
+    do_render(form)
+
+    assert_selector("input[type='text'].input-field")
+  end
+
+  def test_renders_help_from_arguments
+    model = Game.new
+    form = build_form(model)
+
+    with_translations({
+      forms: {
+        game: {
+          title: {
+            help: "Help from translations"
+          }
+        }
+      }
+    }) do
+      do_render(form, help: "Help is shown below the input")
+    end
+
+    assert_text("Help is shown below the input")
+  end
+
+  def test_renders_help_from_translations
+    model = Game.new
+    form = build_form(model)
+
+    with_translations({
+      forms: {
+        game: {
+          title: {
+            help: "Help from translations"
+          }
+        }
+      }
+    }) do
+      do_render(form)
+    end
+
+    assert_text("Help from translations")
+  end
+
   def test_renders_hint_from_translations
     model = Game.new
     model.title = "Dead Cells"
@@ -80,6 +137,26 @@ class Felt::InputGroup::TextComponentTest < ViewComponent::TestCase
     do_render(form)
 
     assert_text("Title is invalid")
+  end
+
+  def test_uses_error_classes_if_model_is_invalid
+    model = Game.new
+    model.errors.add(:title, :invalid)
+    form = build_form(model)
+
+    Felt.configure do |config|
+      config.classes = {
+        input_group: {
+          input: {
+            invalid: "error-class"
+          }
+        }
+      }
+    end
+
+    do_render(form)
+
+    assert_css("input[type=text].error-class")
   end
 
   private
