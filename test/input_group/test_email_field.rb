@@ -15,47 +15,41 @@ end
 class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
   include ViewComponent::TestHelpers
 
-  def test_renders_a_label
-    model = Subscriber.new
-    form = build_form(model)
+  setup do
+    @attribute = :email
+    @model = Subscriber.new
+    @form = build_form(@model)
+    @component_class = Felt::InputGroup::EmailField
+  end
 
-    do_render(form)
+  def test_renders_a_label
+    render_component_to_html
 
     assert_selector("label[for=subscriber_email]", text: "Email")
   end
 
   def test_renders_provided_label
-    model = Subscriber.new
-    form = build_form(model)
-
-    do_render(form, label: "This label")
+    @options = {label: "This label"}
+    render_component_to_html
 
     assert_selector("label[for=subscriber_email]", text: "This label")
   end
 
   def test_renders_an_input_field
-    model = Subscriber.new
-    form = build_form(model)
-
-    do_render(form)
+    render_component_to_html
 
     assert_selector("input[type='email'][name='subscriber[email]']")
   end
 
   def test_uses_the_value_from_the_object
-    model = Subscriber.new
-    model.email = "mario@nintendo.com"
-    form = build_form(model)
+    @model.email = "mario@nintendo.com"
 
-    do_render(form)
+    render_component_to_html
 
     assert(page.has_field?("subscriber[email]", with: "mario@nintendo.com"))
   end
 
   def test_uses_configured_classes_for_input
-    model = Subscriber.new
-    form = build_form(model)
-
     Felt.configure do |config|
       config.classes = {
         input_group: {
@@ -66,14 +60,13 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
       }
     end
 
-    do_render(form)
+    render_component_to_html
 
     assert_selector("input[type='email'].input-field")
   end
 
   def test_renders_help_from_arguments
-    model = Subscriber.new
-    form = build_form(model)
+    @options = {help: "This has priority over translations"}
 
     with_translations({
       forms: {
@@ -84,16 +77,13 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
         }
       }
     }) do
-      do_render(form, help: "Help is shown below the input")
+      render_component_to_html
     end
 
-    assert_text("Help is shown below the input")
+    assert_text("This has priority over translations")
   end
 
   def test_renders_help_from_translations
-    model = Subscriber.new
-    form = build_form(model)
-
     with_translations({
       forms: {
         subscriber: {
@@ -103,17 +93,13 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
         }
       }
     }) do
-      do_render(form)
+      render_component_to_html
     end
 
     assert_text("Help from translations")
   end
 
   def test_renders_hint_from_translations
-    model = Subscriber.new
-    model.email = "mario@nintendo.com"
-    form = build_form(model)
-
     with_translations({
       forms: {
         subscriber: {
@@ -123,26 +109,22 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
         }
       }
     }) do
-      do_render(form)
+      render_component_to_html
     end
 
     assert_text("Hint from translations")
   end
 
   def test_renders_errors_if_any
-    model = Subscriber.new
-    model.errors.add(:email, :invalid)
-    form = build_form(model)
+    @model.errors.add(:email, :invalid)
 
-    do_render(form)
+    render_component_to_html
 
     assert_text("Email is invalid")
   end
 
   def test_uses_error_classes_if_model_is_invalid
-    model = Subscriber.new
-    model.errors.add(:email, :invalid)
-    form = build_form(model)
+    @model.errors.add(:email, :invalid)
 
     Felt.configure do |config|
       config.classes = {
@@ -154,24 +136,19 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
       }
     end
 
-    do_render(form)
+    render_component_to_html
 
     assert_css("input[type=email].error-class")
   end
 
   def test_options_can_be_added_to_wrapping_element
-    model = Subscriber.new
-    form = build_form(model)
-
-    do_render(form, id: "subscriber-card")
+    @options = {id: "subscriber-card"}
+    render_component_to_html
 
     assert_css("div#subscriber-card")
   end
 
   def test_uses_configured_classes_for_wrapping_element
-    model = Subscriber.new
-    form = build_form(model)
-
     Felt.configure do |config|
       config.classes = {
         input_group: {
@@ -180,7 +157,7 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
       }
     end
 
-    do_render(form)
+    render_component_to_html
 
     assert_css("div.my-input-group")
   end
@@ -206,6 +183,15 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
 
   def do_render(form, **options)
     component = Felt::InputGroup::EmailField.new(form: form, attribute: :email, **options)
+    render_inline(component).to_html
+  end
+
+  def render_component_to_html
+    component = @component_class.new(
+      form: @form,
+      attribute: @attribute,
+      **(@options || {})
+    )
     render_inline(component).to_html
   end
 
