@@ -3,6 +3,7 @@
 require_relative "felt/configuration"
 require_relative "felt/version"
 
+require_relative "input_group/email_field"
 require_relative "input_group/text_field"
 
 module Felt
