@@ -4,12 +4,12 @@ require "view_component"
 
 module Felt
   module InputGroup
-    class TextFieldComponent < ViewComponent::Base
+    class TextField < ViewComponent::Base
       attr_reader :attribute, :form, :options
 
       # Returns the classes to use for the root element of the input.
       def classes
-        Felt.configuration.classes.dig(:input_group, :text_field_component)
+        Felt.configuration.classes.dig(:input_group, :text_field)
       end
 
       # Returns the error messages to output in the input group. Returns [] if no

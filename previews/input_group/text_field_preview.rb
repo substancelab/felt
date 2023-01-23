@@ -7,37 +7,37 @@ module InputGroup
     attr_accessor :title
   end
 
-  class TextFieldComponentPreview < ViewComponent::Preview
+  class TextFieldPreview < ViewComponent::Preview
     def default
       model = Game.new
       model.title = "Dig Dug"
       form = build_form(model)
-      render(Felt::InputGroup::TextFieldComponent.new(form: form, attribute: :title))
+      render(Felt::InputGroup::TextField.new(form: form, attribute: :title))
     end
 
     def with_label
       model = Game.new
       form = build_form(model)
-      render(Felt::InputGroup::TextFieldComponent.new(form: form, attribute: :title, label: "Game Title"))
+      render(Felt::InputGroup::TextField.new(form: form, attribute: :title, label: "Game Title"))
     end
 
     def with_hint
       model = Game.new
       form = build_form(model)
-      render(Felt::InputGroup::TextFieldComponent.new(form: form, attribute: :title, hint: "Enter the title of the game"))
+      render(Felt::InputGroup::TextField.new(form: form, attribute: :title, hint: "Enter the title of the game"))
     end
 
     def with_help
       model = Game.new
       form = build_form(model)
-      render(Felt::InputGroup::TextFieldComponent.new(form: form, attribute: :title, help: "Games can have different titles in different regions."))
+      render(Felt::InputGroup::TextField.new(form: form, attribute: :title, help: "Games can have different titles in different regions."))
     end
 
     def with_errors
       model = Game.new
       model.errors.add(:title, :invalid)
       form = build_form(model)
-      render(Felt::InputGroup::TextFieldComponent.new(form: form, attribute: :title))
+      render(Felt::InputGroup::TextField.new(form: form, attribute: :title))
     end
 
     private

@@ -4,7 +4,7 @@ require "test_helper"
 require "view_component/test_case"
 require "active_model"
 
-require "input_group/text_field_component"
+require "input_group/text_field"
 
 class Game
   include ActiveModel::API
@@ -12,7 +12,7 @@ class Game
   attr_accessor :title
 end
 
-class Felt::InputGroup::TextFieldComponentTest < ViewComponent::TestCase
+class Felt::InputGroup::TextFieldTest < ViewComponent::TestCase
   include ViewComponent::TestHelpers
 
   def test_renders_a_label
@@ -175,7 +175,7 @@ class Felt::InputGroup::TextFieldComponentTest < ViewComponent::TestCase
     Felt.configure do |config|
       config.classes = {
         input_group: {
-          text_field_component: "my-input-group"
+          text_field: "my-input-group"
         }
       }
     end
@@ -205,7 +205,7 @@ class Felt::InputGroup::TextFieldComponentTest < ViewComponent::TestCase
   end
 
   def do_render(form, **options)
-    component = Felt::InputGroup::TextFieldComponent.new(form: form, attribute: :title, **options)
+    component = Felt::InputGroup::TextField.new(form: form, attribute: :title, **options)
     render_inline(component).to_html
   end
 
