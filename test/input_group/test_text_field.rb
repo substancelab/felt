@@ -168,6 +168,16 @@ class Felt::InputGroup::TextFieldTest < ViewComponent::TestCase
     assert_css("div#game-card")
   end
 
+  def test_known_options_are_not_added_to_wrapping_element
+    model = Game.new
+    form = build_form(model)
+
+    do_render(form)
+
+    refute_css("div[form]")
+    refute_css("div[attribute]")
+  end
+
   def test_uses_configured_classes_for_wrapping_element
     model = Game.new
     form = build_form(model)

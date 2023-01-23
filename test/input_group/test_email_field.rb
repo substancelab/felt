@@ -148,6 +148,13 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
     assert_css("div#subscriber-card")
   end
 
+  def test_known_options_are_not_added_to_wrapping_element
+    render_component_to_html
+
+    refute_css("div[form]")
+    refute_css("div[attribute]")
+  end
+
   def test_uses_configured_classes_for_wrapping_element
     Felt.configure do |config|
       config.classes = {

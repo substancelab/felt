@@ -76,14 +76,12 @@ module Felt
       # of the input group. See ActionView::Helpers::TagHelper#content_tag for
       # details.
       def initialize(attribute:, form:, help: nil, hint: nil, label: nil, placeholder: nil, **options)
-        super
-
         @attribute = attribute
         @form = form
         @help = help
         @hint = hint
         @label = label
-        @options = options.symbolize_keys.except(:attribute, :form)
+        @options = options
         @placeholder = placeholder
       end
 
