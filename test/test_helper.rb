@@ -13,3 +13,28 @@ require "rails/test_unit/railtie"
 
 require File.expand_path("../demo/config/environment.rb", __dir__)
 require "felt"
+
+def build_form(model)
+  ActionView::Helpers::FormBuilder.new(
+    model.class.to_s.underscore,
+    model,
+    build_template,
+    {}
+  )
+end
+
+def build_template
+  ActionView::Base.new(
+    :this,
+    {}, # assigns?
+    :there
+  )
+end
+
+def with_translations(translations)
+  original_translations = I18n.backend.translations[I18n.locale]
+  I18n.backend.translations[I18n.locale] = translations
+  yield
+ensure
+  I18n.backend.translations[I18n.locale] = original_translations
+end

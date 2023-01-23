@@ -164,23 +164,6 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
 
   private
 
-  def build_form(model)
-    ActionView::Helpers::FormBuilder.new(
-      model.class.to_s.underscore,
-      model,
-      build_template,
-      {}
-    )
-  end
-
-  def build_template
-    ActionView::Base.new(
-      :this,
-      {}, # assigns?
-      :there
-    )
-  end
-
   def do_render(form, **options)
     component = Felt::InputGroup::EmailField.new(form: form, attribute: :email, **options)
     render_inline(component).to_html
@@ -193,13 +176,5 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
       **(@options || {})
     )
     render_inline(component).to_html
-  end
-
-  def with_translations(translations)
-    original_translations = I18n.backend.translations[I18n.locale]
-    I18n.backend.translations[I18n.locale] = translations
-    yield
-  ensure
-    I18n.backend.translations[I18n.locale] = original_translations
   end
 end
