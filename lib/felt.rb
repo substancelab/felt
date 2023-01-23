@@ -3,7 +3,7 @@
 require_relative "felt/configuration"
 require_relative "felt/version"
 
-require_relative "input_group/text_component"
+require_relative "input_group/text_field_component"
 
 module Felt
   class Error < StandardError; end
