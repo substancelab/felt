@@ -169,6 +169,14 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
     assert_css("div.my-input-group")
   end
 
+  def test_passes_input_options_to_input
+    @options = {input_options: {autofocus: true}}
+
+    render_component_to_html
+
+    assert_selector("input[type='email'][autofocus]")
+  end
+
   private
 
   def do_render(form, **options)

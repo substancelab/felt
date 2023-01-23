@@ -40,6 +40,12 @@ module InputGroup
       render(Felt::InputGroup::TextField.new(form: form, attribute: :title))
     end
 
+    def with_input_options
+      model = Game.new
+      form = build_form(model)
+      render(Felt::InputGroup::TextField.new(form: form, attribute: :title, input_options: {autofocus: true}))
+    end
+
     private
 
     def build_form(model)

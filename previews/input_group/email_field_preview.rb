@@ -40,6 +40,12 @@ module InputGroup
       render(Felt::InputGroup::EmailField.new(form: form, attribute: :email))
     end
 
+    def with_input_options
+      model = Subscriber.new
+      form = build_form(model)
+      render(Felt::InputGroup::EmailField.new(form: form, attribute: :email, input_options: {autofocus: true}))
+    end
+
     private
 
     def build_form(model)

@@ -5,7 +5,7 @@ require "view_component"
 module Felt
   module InputGroup
     class EmailField < ViewComponent::Base
-      attr_reader :attribute, :form, :options
+      attr_reader :attribute, :form, :input_options, :options
 
       # Returns the classes to use for the root element of the input.
       def classes
@@ -63,6 +63,8 @@ module Felt
       #   looked up in the `forms.<object_name>.<attribute>` translation. See
       #   #hint for more details. To disable the hint, pass an empty string.
       #
+      # - input_options: The options to pass to the input field.
+      #
       # - label: The label for the input group. If not provided, the label will
       #   be looked up in the `forms.<object_name>.<attribute>` translation. See
       #   #label for more details. To disable the label, pass an empty string.
@@ -75,11 +77,12 @@ module Felt
       # All remaining keyword arguments are passed to the wrapping div element
       # of the input group. See ActionView::Helpers::TagHelper#content_tag for
       # details.
-      def initialize(attribute:, form:, help: nil, hint: nil, label: nil, placeholder: nil, **options)
+      def initialize(attribute:, form:, help: nil, hint: nil, input_options: {}, label: nil, placeholder: nil, **options)
         @attribute = attribute
         @form = form
         @help = help
         @hint = hint
+        @input_options = input_options
         @label = label
         @options = options
         @placeholder = placeholder

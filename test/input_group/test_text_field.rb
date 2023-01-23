@@ -195,6 +195,15 @@ class Felt::InputGroup::TextFieldTest < ViewComponent::TestCase
     assert_css("div.my-input-group")
   end
 
+  def test_passes_input_options_to_input
+    model = Game.new
+    form = build_form(model)
+
+    do_render(form, input_options: {autofocus: true})
+
+    assert_selector("input[type='text'][autofocus]")
+  end
+
   private
 
   def do_render(form, **options)
