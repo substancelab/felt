@@ -21,12 +21,16 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
     @model = Subscriber.new
     @form = build_form(@model)
     @component_class = Felt::InputGroup::EmailField
+
+    @expected_input_id = "subscriber_email"
+    @expected_input_name = "subscriber[email]"
+    @expected_input_type = "email"
   end
 
   def test_renders_a_label
     render_component_to_html
 
-    assert_selector("label[for=subscriber_email]", text: "Email")
+    assert_selector("label[for=#{@expected_input_id}]", text: @attribute.to_s.titlecase)
   end
 
   def test_renders_provided_label
@@ -34,21 +38,21 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
 
     render_component_to_html
 
-    assert_selector("label[for=subscriber_email]", text: "This label")
+    assert_selector("label[for=#{@expected_input_id}]", text: "This label")
   end
 
   def test_renders_an_input_field
     render_component_to_html
 
-    assert_selector("input[type='email'][name='subscriber[email]']")
+    assert_selector("input[type='#{@expected_input_type}'][name='#{@expected_input_name}']")
   end
 
   def test_uses_the_value_from_the_object
-    @model.email = "mario@nintendo.com"
+    @model.send("#{@attribute}=", "Something entirely different")
 
     render_component_to_html
 
-    assert(page.has_field?("subscriber[email]", with: "mario@nintendo.com"))
+    assert(page.has_field?(@expected_input_name, with: @model.send(@attribute)))
   end
 
   def test_uses_configured_classes_for_input
@@ -64,7 +68,7 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
 
     render_component_to_html
 
-    assert_selector("input[type='email'].input-field")
+    assert_selector("input[type='#{@expected_input_type}'].input-field")
   end
 
   def test_renders_help_from_arguments
@@ -72,8 +76,8 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
 
     with_translations({
       forms: {
-        subscriber: {
-          email: {
+        "#{@form.object_name}": {
+          "#{@attribute}": {
             help: "Help from translations"
           }
         }
@@ -88,8 +92,8 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
   def test_renders_help_from_translations
     with_translations({
       forms: {
-        subscriber: {
-          email: {
+        "#{@form.object_name}": {
+          "#{@attribute}": {
             help: "Help from translations"
           }
         }
@@ -104,8 +108,8 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
   def test_renders_hint_from_translations
     with_translations({
       forms: {
-        subscriber: {
-          email: {
+        "#{@form.object_name}": {
+          "#{@attribute}": {
             hint: "Hint from translations"
           }
         }
@@ -118,15 +122,15 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
   end
 
   def test_renders_errors_if_any
-    @model.errors.add(:email, :invalid)
+    @model.errors.add(@attribute, :invalid)
 
     render_component_to_html
 
-    assert_text("Email is invalid")
+    assert_text("is invalid")
   end
 
   def test_uses_error_classes_if_model_is_invalid
-    @model.errors.add(:email, :invalid)
+    @model.errors.add(@attribute, :invalid)
 
     Felt.configure do |config|
       config.classes = {
@@ -140,14 +144,15 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
 
     render_component_to_html
 
-    assert_css("input[type=email].error-class")
+    assert_css("input[type=#{@expected_input_type}].error-class")
   end
 
   def test_options_can_be_added_to_wrapping_element
-    @options = {id: "subscriber-card"}
+    @options = {id: "a-unique-dom-id"}
+
     render_component_to_html
 
-    assert_css("div#subscriber-card")
+    assert_css("div#a-unique-dom-id")
   end
 
   def test_known_options_are_not_added_to_wrapping_element
@@ -176,13 +181,6 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
 
     render_component_to_html
 
-    assert_selector("input[type='email'][autofocus]")
-  end
-
-  private
-
-  def do_render(form, **options)
-    component = Felt::InputGroup::EmailField.new(form: form, attribute: :email, **options)
-    render_inline(component).to_html
+    assert_selector("input[type='#{@expected_input_type}'][autofocus]")
   end
 end

@@ -21,12 +21,16 @@ class Felt::InputGroup::TextFieldTest < ViewComponent::TestCase
     @model = Game.new
     @form = build_form(@model)
     @component_class = Felt::InputGroup::TextField
+
+    @expected_input_id = "game_title"
+    @expected_input_name = "game[title]"
+    @expected_input_type = "text"
   end
 
   def test_renders_a_label
     render_component_to_html
 
-    assert_selector("label[for=game_title]", text: "Title")
+    assert_selector("label[for=#{@expected_input_id}]", text: @attribute.to_s.titlecase)
   end
 
   def test_renders_provided_label
@@ -34,21 +38,21 @@ class Felt::InputGroup::TextFieldTest < ViewComponent::TestCase
 
     render_component_to_html
 
-    assert_selector("label[for=game_title]", text: "This label")
+    assert_selector("label[for=#{@expected_input_id}]", text: "This label")
   end
 
   def test_renders_an_input_field
     render_component_to_html
 
-    assert_selector("input[type='text'][name='game[title]']")
+    assert_selector("input[type='#{@expected_input_type}'][name='#{@expected_input_name}']")
   end
 
   def test_uses_the_value_from_the_object
-    @model.title = "Dead Cells"
+    @model.send("#{@attribute}=", "Something entirely different")
 
     render_component_to_html
 
-    assert(page.has_field?("game[title]", with: "Dead Cells"))
+    assert(page.has_field?(@expected_input_name, with: @model.send(@attribute)))
   end
 
   def test_uses_configured_classes_for_input
@@ -64,16 +68,16 @@ class Felt::InputGroup::TextFieldTest < ViewComponent::TestCase
 
     render_component_to_html
 
-    assert_selector("input[type='text'].input-field")
+    assert_selector("input[type='#{@expected_input_type}'].input-field")
   end
 
   def test_renders_help_from_arguments
-    @options = {help: "Help is shown below the input"}
+    @options = {help: "This has priority over translations"}
 
     with_translations({
       forms: {
-        game: {
-          title: {
+        "#{@form.object_name}": {
+          "#{@attribute}": {
             help: "Help from translations"
           }
         }
@@ -82,14 +86,14 @@ class Felt::InputGroup::TextFieldTest < ViewComponent::TestCase
       render_component_to_html
     end
 
-    assert_text("Help is shown below the input")
+    assert_text("This has priority over translations")
   end
 
   def test_renders_help_from_translations
     with_translations({
       forms: {
-        game: {
-          title: {
+        "#{@form.object_name}": {
+          "#{@attribute}": {
             help: "Help from translations"
           }
         }
@@ -102,12 +106,10 @@ class Felt::InputGroup::TextFieldTest < ViewComponent::TestCase
   end
 
   def test_renders_hint_from_translations
-    @model.title = "Dead Cells"
-
     with_translations({
       forms: {
-        game: {
-          title: {
+        "#{@form.object_name}": {
+          "#{@attribute}": {
             hint: "Hint from translations"
           }
         }
@@ -120,15 +122,15 @@ class Felt::InputGroup::TextFieldTest < ViewComponent::TestCase
   end
 
   def test_renders_errors_if_any
-    @model.errors.add(:title, :invalid)
+    @model.errors.add(@attribute, :invalid)
 
     render_component_to_html
 
-    assert_text("Title is invalid")
+    assert_text("is invalid")
   end
 
   def test_uses_error_classes_if_model_is_invalid
-    @model.errors.add(:title, :invalid)
+    @model.errors.add(@attribute, :invalid)
 
     Felt.configure do |config|
       config.classes = {
@@ -142,16 +144,15 @@ class Felt::InputGroup::TextFieldTest < ViewComponent::TestCase
 
     render_component_to_html
 
-    assert_css("input[type=text].error-class")
+    assert_css("input[type=#{@expected_input_type}].error-class")
   end
 
   def test_options_can_be_added_to_wrapping_element
-    model = Game.new
-    form = build_form(model)
+    @options = {id: "a-unique-dom-id"}
 
-    do_render(form, id: "game-card")
+    render_component_to_html
 
-    assert_css("div#game-card")
+    assert_css("div#a-unique-dom-id")
   end
 
   def test_known_options_are_not_added_to_wrapping_element
@@ -180,13 +181,6 @@ class Felt::InputGroup::TextFieldTest < ViewComponent::TestCase
 
     render_component_to_html
 
-    assert_selector("input[type='text'][autofocus]")
-  end
-
-  private
-
-  def do_render(form, **options)
-    component = Felt::InputGroup::TextField.new(form: form, attribute: :title, **options)
-    render_inline(component).to_html
+    assert_selector("input[type='#{@expected_input_type}'][autofocus]")
   end
 end
