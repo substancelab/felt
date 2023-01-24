@@ -182,11 +182,11 @@ module Felt
       end
 
       def with_translations(translations)
-        original_translations = I18n.backend.translations[I18n.locale]
         I18n.backend.translations[I18n.locale] = translations
         yield
       ensure
-        I18n.backend.translations[I18n.locale] = original_translations
+        I18n.reload!
+        I18n.eager_load!
       end
     end
   end
