@@ -30,6 +30,7 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
 
   def test_renders_provided_label
     @options = {label: "This label"}
+
     render_component_to_html
 
     assert_selector("label[for=subscriber_email]", text: "This label")
