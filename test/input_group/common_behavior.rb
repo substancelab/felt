@@ -19,6 +19,12 @@ module Felt
         assert_selector("label[for=#{@expected_input_id}]", text: "This label")
       end
 
+      def test_it_does_not_include_a_label_inside_the_label
+        render_component_to_html
+
+        refute_selector("label label")
+      end
+
       def test_renders_an_input_field
         render_component_to_html
 
@@ -163,23 +169,6 @@ module Felt
       end
 
       private
-
-      def build_form(model)
-        ActionView::Helpers::FormBuilder.new(
-          model.class.to_s.underscore,
-          model,
-          build_template,
-          {}
-        )
-      end
-
-      def build_template
-        ActionView::Base.new(
-          :this,
-          {}, # assigns?
-          :there
-        )
-      end
 
       def with_translations(translations)
         I18n.backend.translations[I18n.locale] = translations

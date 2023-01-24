@@ -112,8 +112,7 @@ module Felt
       #    (like with ActionView::Helpers::FormBuilder#label).
       def label
         @label ||=
-          translate("label") ||
-          form.label(attribute)
+          translate("label")
       end
 
       # Returns true if the input group has a label configured

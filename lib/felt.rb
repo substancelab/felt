@@ -5,6 +5,7 @@ require_relative "felt/version"
 
 require_relative "input_group/email_field"
 require_relative "input_group/text_field"
+require_relative "label"
 
 module Felt
   class Error < StandardError; end
