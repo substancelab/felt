@@ -31,14 +31,6 @@ module Felt
         assert_selector("input[type='#{@expected_input_type}'][name='#{@expected_input_name}']")
       end
 
-      def test_uses_the_value_from_the_object
-        @model.send("#{@attribute}=", "Something entirely different")
-
-        render_component_to_html
-
-        assert(page.has_field?(@expected_input_name, with: @model.send(@attribute)))
-      end
-
       def test_uses_configured_classes_for_input
         Felt.configure do |config|
           config.classes = {

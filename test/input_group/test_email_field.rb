@@ -25,4 +25,12 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
   end
 
   include Felt::InputGroup::CommonBehavior
+
+  def test_uses_the_value_from_the_object
+    @model.send("#{@attribute}=", "Something entirely different")
+
+    render_component_to_html
+
+    assert(page.has_field?(@expected_input_name, with: @model.send(@attribute)))
+  end
 end
