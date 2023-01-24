@@ -67,9 +67,10 @@ module Felt
       #
       # - input_options: The options to pass directly to the input field.
       #
-      # - label: The label for the input group. If not provided, the label will
-      #   be looked up in the `forms.<object_name>.<attribute>` translation. See
-      #   #label for more details. To disable the label, pass an empty string.
+      # - label: The label text for the input group. If not provided, the text
+      #   will be looked up in the `forms.<object_name>.<attribute>`
+      #   translation. See #label for more details. To disable the label, pass
+      #   an empty string.
       #
       # - placeholder: The placeholder for the input field. If not provided, the
       #   placeholder will be looked up in the `forms.<object_name>.<attribute>`

@@ -32,7 +32,7 @@ class Felt::LabelTest < ViewComponent::TestCase
   end
 
   def test_renders_provided_label
-    @options = {label: "This label"}
+    @options = {text: "This label"}
 
     render_component_to_html
 
