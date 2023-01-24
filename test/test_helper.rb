@@ -11,6 +11,8 @@ require "rails/test_help"
 require "action_controller/railtie"
 require "rails/test_unit/railtie"
 
+require "render_helpers"
+
 require File.expand_path("../demo/config/environment.rb", __dir__)
 require "felt"
 

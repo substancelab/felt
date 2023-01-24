@@ -14,6 +14,7 @@ end
 
 class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
   include ViewComponent::TestHelpers
+  include RenderHelpers
 
   setup do
     @attribute = :email
@@ -182,15 +183,6 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
 
   def do_render(form, **options)
     component = Felt::InputGroup::EmailField.new(form: form, attribute: :email, **options)
-    render_inline(component).to_html
-  end
-
-  def render_component_to_html
-    component = @component_class.new(
-      form: @form,
-      attribute: @attribute,
-      **(@options || {})
-    )
     render_inline(component).to_html
   end
 end
