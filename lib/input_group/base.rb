@@ -11,7 +11,7 @@ module Felt
 
       # Returns the classes to use for the root element of the input.
       def classes
-        classes_from_configuration(:input_group, :text_field)
+        classes_from_configuration(:input_group, self.class.config_key)
       end
 
       # Returns the error messages to output in the input group. Returns [] if no

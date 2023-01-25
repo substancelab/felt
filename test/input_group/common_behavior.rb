@@ -179,7 +179,7 @@ module Felt
         Felt.configure do |config|
           config.classes = {
             input_group: {
-              text_field: "my-input-group"
+              "#{@component_class.config_key}": "my-input-group"
             }
           }
         end
