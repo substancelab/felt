@@ -11,7 +11,7 @@ module Felt
 
       # Returns the classes to use for the root element of the input.
       def classes
-        Felt.configuration.classes.dig(:input_group, :text_field)
+        classes_from_configuration(:input_group, :text_field)
       end
 
       # Returns the error messages to output in the input group. Returns [] if no
@@ -91,17 +91,10 @@ module Felt
         @placeholder = placeholder
       end
 
-      # Returns the classes to use for the input field. Use configuration from
-      # `input_group.input.invalid` if the input group has errors,
-      # `input_group.input.default` otherwise.
+      # Returns the classes to use for the input field.
       def input_classes
-        key = if errors?
-          :invalid
-        else
-          :default
-        end
-
-        Felt.configuration.classes.dig(:input_group, :input, key)
+        classes_from_configuration(:input, self.class.config_key, state_key) ||
+          classes_from_configuration(:input, :default, state_key)
       end
 
       # Returns the label for the input group. If no label is configured, returns
@@ -142,6 +135,24 @@ module Felt
       end
 
       private
+
+      # Returns classes configured at the given path under the classes key in
+      # the configuration.
+      def classes_from_configuration(*path)
+        Felt.configuration.classes.dig(*path)
+      end
+
+      # Returns the key to use as the state part when looking up classes in
+      # configuration.
+      #
+      # Returns `:invalid` if the input group has errors, `:default` otherwise.
+      def state_key
+        if errors?
+          :invalid
+        else
+          :default
+        end
+      end
 
       def translate(key)
         I18n.translate(key, default: nil, scope: translation_scope)

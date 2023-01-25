@@ -8,6 +8,11 @@ module Felt
     # field is blank by default; pass in a value via options if this is not
     # desired.
     class PasswordField < InputGroup::Base
+      class << self
+        def config_key
+          :password_field
+        end
+      end
     end
   end
 end

@@ -31,12 +31,12 @@ module Felt
         assert_selector("input[type='#{@expected_input_type}'][name='#{@expected_input_name}']")
       end
 
-      def test_uses_configured_classes_for_input
+      def test_uses_classes_configured_for_all_inputs
         Felt.configure do |config|
           config.classes = {
-            input_group: {
-              input: {
-                default: "input-field"
+            input: {
+              default: {
+                default: "default-input-field"
               }
             }
           }
@@ -44,7 +44,62 @@ module Felt
 
         render_component_to_html
 
-        assert_selector("input[type='#{@expected_input_type}'].input-field")
+        assert_selector("input.default-input-field")
+      end
+
+      def test_uses_classes_configured_for_this_input_type
+        Felt.configure do |config|
+          config.classes = {
+            input: {
+              default: {
+                default: "default-input-field"
+              },
+              "#{@component_class.config_key}": {
+                default: "specific-input-field"
+              }
+            }
+          }
+        end
+
+        render_component_to_html
+
+        assert_selector("input.specific-input-field")
+      end
+
+      def test_uses_classes_configured_for_all_inputs_in_invalid_state
+        @model.errors.add(@attribute, :invalid)
+
+        Felt.configure do |config|
+          config.classes = {
+            input: {
+              default: {
+                invalid: "default-input-field-with-error"
+              }
+            }
+          }
+        end
+
+        render_component_to_html
+
+        assert_selector("input.default-input-field-with-error")
+      end
+
+      def test_uses_classes_configured_for_this_input_type_in_invalid_state
+        @model.errors.add(@attribute, :invalid)
+
+        Felt.configure do |config|
+          config.classes = {
+            input: {
+              "#{@component_class.config_key}": {
+                invalid: "specific-input-field-with-error"
+              }
+            }
+          }
+        end
+
+        render_component_to_html
+
+        assert_selector("input.specific-input-field-with-error")
       end
 
       def test_renders_help_from_arguments
@@ -103,24 +158,6 @@ module Felt
         render_component_to_html
 
         assert_text("is invalid")
-      end
-
-      def test_uses_error_classes_if_model_is_invalid
-        @model.errors.add(@attribute, :invalid)
-
-        Felt.configure do |config|
-          config.classes = {
-            input_group: {
-              input: {
-                invalid: "error-class"
-              }
-            }
-          }
-        end
-
-        render_component_to_html
-
-        assert_css("input[type=#{@expected_input_type}].error-class")
       end
 
       def test_options_can_be_added_to_wrapping_element
