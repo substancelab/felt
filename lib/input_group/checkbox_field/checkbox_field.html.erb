@@ -6,7 +6,7 @@
     </div>
     <div class="ml-2 text-sm">
       <%= render(Felt::Label.new(:form => form, :attribute => attribute, :classes => label_classes, :text => label)) %>
-      <% if help? %><div class="<%= Felt.configuration.classes.dig(:input_group, :help) %>"><%= help %></div><% end %>
+      <% if help? %><div class="<%= help_classes %>"><%= help %></div><% end %>
       <% errors.each do |error| %>
         <p class="<%= Felt.configuration.classes.dig(:input_group, :error) %>"><%= error %></p>
       <% end %>

@@ -40,9 +40,15 @@ module Felt
           translate("help")
       end
 
-      # Returns true if the input group has a hint configured
+      # Returns true if the input group has help configured
       def help?
         help.present?
+      end
+
+      # Returns the classes to use for the help text.
+      def help_classes
+        classes_from_configuration(:help, self.class.config_key, state_key) ||
+          classes_from_configuration(:help, :default, state_key)
       end
 
       # Returns the hint for the input group. If no hint is configured, returns nil.

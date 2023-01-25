@@ -171,6 +171,45 @@ module Felt
         assert_text("Help from translations")
       end
 
+      def test_it_uses_classes_configured_for_all_helps
+        @options = {help: "This is helpful"}
+
+        Felt.configure do |config|
+          config.classes = {
+            help: {
+              default: { # Help elements for all input types
+                default: "default-help" # Default state
+              }
+            }
+          }
+        end
+
+        render_component_to_html
+
+        assert_selector("div.default-help")
+      end
+
+      def test_it_uses_classes_configured_for_helps_for_this_input_type
+        @options = {help: "This is helpful"}
+
+        Felt.configure do |config|
+          config.classes = {
+            help: {
+              default: { # Helps for all input types
+                default: "default-help" # Default state
+              },
+              "#{@component_class.config_key}": {
+                default: "specific-input-help" # Default state
+              }
+            }
+          }
+        end
+
+        render_component_to_html
+
+        assert_selector("div.specific-input-help")
+      end
+
       def test_renders_hint_from_translations
         with_translations({
           forms: {
