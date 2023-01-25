@@ -273,6 +273,45 @@ module Felt
         assert_text("is invalid")
       end
 
+      def test_it_uses_classes_configured_for_all_errors
+        @model.errors.add(@attribute, :invalid)
+
+        Felt.configure do |config|
+          config.classes = {
+            error: {
+              default: { # Help elements for all input types
+                invalid: "default-error" # Errors are usually shown in the invalid state
+              }
+            }
+          }
+        end
+
+        p render_component_to_html
+
+        assert_selector("p.default-error")
+      end
+
+      def test_it_uses_classes_configured_for_errors_for_this_input_type
+        @model.errors.add(@attribute, :invalid)
+
+        Felt.configure do |config|
+          config.classes = {
+            error: {
+              default: { # errors for all input types
+                invalid: "default-error" # Default state
+              },
+              "#{@component_class.config_key}": {
+                invalid: "specific-input-error" # Errors are usually shown in the invalid state
+              }
+            }
+          }
+        end
+
+        render_component_to_html
+
+        assert_selector("p.specific-input-error")
+      end
+
       def test_options_can_be_added_to_wrapping_element
         @options = {id: "a-unique-dom-id"}
 

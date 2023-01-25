@@ -28,6 +28,12 @@ module Felt
         errors.any?
       end
 
+      # Returns the classes to use for the help text.
+      def error_classes
+        classes_from_configuration(:error, self.class.config_key, state_key) ||
+          classes_from_configuration(:error, :default, state_key)
+      end
+
       # Returns the help text for the input group. If no help is configured,
       # returns nil.
       #
