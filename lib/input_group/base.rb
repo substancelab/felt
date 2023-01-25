@@ -97,6 +97,12 @@ module Felt
           classes_from_configuration(:input, :default, state_key)
       end
 
+      # Returns the classes to use for the label field.
+      def label_classes
+        classes_from_configuration(:label, self.class.config_key, state_key) ||
+          classes_from_configuration(:label, :default, state_key)
+      end
+
       # Returns the label for the input group. If no label is configured, returns
       # nil.
       #

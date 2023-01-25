@@ -9,17 +9,21 @@ module Felt
 
     # Returns the classes to use for the label element
     def classes
-      Felt.configuration.classes.dig(:label, :default)
+      @classes ||
+        Felt.configuration.classes.dig(:label, :default, :default)
     end
 
+    # - classes: Classes to add to the label element.
+    #
     # - text: The label text to show. If not provided, the text will be
     #   looked up in the `forms.<object_name>.<attribute>` translation. See
     #   #label for more details. To disable the label, pass an empty string.
     #
     # All remaining keyword arguments are passed to the label element. See
     # ActionView::Helpers::FormBuilder#label for details.
-    def initialize(attribute:, form:, text: nil, **options)
+    def initialize(attribute:, form:, classes: nil, text: nil, **options)
       @attribute = attribute
+      @classes = classes
       @form = form
       @text = text
       @options = options

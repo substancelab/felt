@@ -11,7 +11,7 @@ module Felt
         assert_selector("label[for=#{@expected_input_id}]", text: @attribute.to_s.titlecase)
       end
 
-      def test_renders_provided_label
+      def test_renders_provided_label_text
         @options = {label: "This label"}
 
         render_component_to_html
@@ -23,6 +23,41 @@ module Felt
         render_component_to_html
 
         refute_selector("label label")
+      end
+
+      def test_it_uses_classes_configured_for_all_labels
+        Felt.configure do |config|
+          config.classes = {
+            label: {
+              default: { # Labels for all input types
+                default: "default-label" # Default state
+              }
+            }
+          }
+        end
+
+        render_component_to_html
+
+        assert_selector("label[for=#{@expected_input_id}].default-label")
+      end
+
+      def test_it_uses_classes_configured_for_labels_for_this_input_type
+        Felt.configure do |config|
+          config.classes = {
+            label: {
+              default: { # Labels for all input types
+                default: "default-label" # Default state
+              },
+              "#{@component_class.config_key}": {
+                default: "specific-input-label" # Default state
+              }
+            }
+          }
+        end
+
+        render_component_to_html
+
+        assert_selector("label[for=#{@expected_input_id}].specific-input-label")
       end
 
       def test_renders_an_input_field

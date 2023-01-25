@@ -43,14 +43,33 @@ class Felt::LabelTest < ViewComponent::TestCase
     Felt.configure do |config|
       config.classes = {
         label: {
-          default: "input-field"
+          default: {
+            default: "default-label"
+          }
         }
       }
     end
 
     render_component_to_html
 
-    assert_selector("label[for='#{@expected_input_id}'].input-field")
+    assert_selector("label[for='#{@expected_input_id}'].default-label")
+  end
+
+  def test_uses_specified_classes
+    @options = {classes: "custom-label"}
+    Felt.configure do |config|
+      config.classes = {
+        label: {
+          default: {
+            default: "default-label"
+          }
+        }
+      }
+    end
+
+    render_component_to_html
+
+    assert_selector("label[for='#{@expected_input_id}'].custom-label")
   end
 
   def test_it_does_not_include_a_label_inside_the_label

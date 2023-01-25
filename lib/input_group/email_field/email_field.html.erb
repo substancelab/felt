@@ -1,5 +1,6 @@
 <%= content_tag(:div, :class => classes, **options) do %>
-  <%= render(Felt::Label.new(:form => form, :attribute => attribute, :text => label)) %>
+  <%= render(Felt::Label.new(:form => form, :attribute => attribute, :classes => label_classes, :text => label)) %>
+
   <% if hint? %><div class="<%= Felt.configuration.classes.dig(:input_group, :hint) %>"><%= hint %></div><% end %>
   <%= form.email_field(attribute, :class => input_classes, :placeholder => placeholder, **input_options) %>
   <% if help? %><div class="<%= Felt.configuration.classes.dig(:input_group, :help) %>"><%= help %></div><% end %>
