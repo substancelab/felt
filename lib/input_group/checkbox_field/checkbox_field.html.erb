@@ -1,0 +1,15 @@
+<%= content_tag(:div, :class => classes, **options) do %>
+  <% if hint? %><div class="<%= Felt.configuration.classes.dig(:input_group, :hint) %>"><%= hint %></div><% end %>
+  <div class="flex">
+    <div class="flex items-center h-5">
+      <%= form.check_box(attribute, :class => input_classes, :placeholder => placeholder, **input_options) %>
+    </div>
+    <div class="ml-2 text-sm">
+      <%= render(Felt::Label.new(:form => form, :attribute => attribute, :text => label)) %>
+      <% if help? %><div class="<%= Felt.configuration.classes.dig(:input_group, :help) %>"><%= help %></div><% end %>
+      <% errors.each do |error| %>
+        <p class="<%= Felt.configuration.classes.dig(:input_group, :error) %>"><%= error %></p>
+      <% end %>
+    </div>
+  </div>
+<% end %>
