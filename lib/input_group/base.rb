@@ -67,6 +67,12 @@ module Felt
         hint.present?
       end
 
+      # Returns the classes to use for the hint text.
+      def hint_classes
+        classes_from_configuration(:hint, self.class.config_key, state_key) ||
+          classes_from_configuration(:hint, :default, state_key)
+      end
+
       # - hint: The hint for the input group. If not provided, the hint will be
       #   looked up in the `forms.<object_name>.<attribute>` translation. See
       #   #hint for more details. To disable the hint, pass an empty string.

@@ -1,5 +1,5 @@
 <%= content_tag(:div, :class => classes, **options) do %>
-  <% if hint? %><div class="<%= Felt.configuration.classes.dig(:input_group, :hint) %>"><%= hint %></div><% end %>
+  <% if hint? %><div class="<%= hint_classes %>"><%= hint %></div><% end %>
   <div class="flex">
     <div class="flex items-center h-5">
       <%= form.check_box(attribute, :class => input_classes, :placeholder => placeholder, **input_options) %>

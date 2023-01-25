@@ -226,6 +226,45 @@ module Felt
         assert_text("Hint from translations")
       end
 
+      def test_it_uses_classes_configured_for_all_hints
+        @options = {hint: "This is a hint"}
+
+        Felt.configure do |config|
+          config.classes = {
+            hint: {
+              default: { # Help elements for all input types
+                default: "default-hint" # Default state
+              }
+            }
+          }
+        end
+
+        render_component_to_html
+
+        assert_selector("div.default-hint")
+      end
+
+      def test_it_uses_classes_configured_for_hints_for_this_input_type
+        @options = {hint: "This is hintful"}
+
+        Felt.configure do |config|
+          config.classes = {
+            hint: {
+              default: { # hints for all input types
+                default: "default-hint" # Default state
+              },
+              "#{@component_class.config_key}": {
+                default: "specific-input-hint" # Default state
+              }
+            }
+          }
+        end
+
+        render_component_to_html
+
+        assert_selector("div.specific-input-hint")
+      end
+
       def test_renders_errors_if_any
         @model.errors.add(@attribute, :invalid)
 
