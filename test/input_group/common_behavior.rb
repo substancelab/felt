@@ -1,8 +1,10 @@
+require "i18n_helpers"
 require "render_helpers"
 
 module Felt
   module InputGroup
     module CommonBehavior
+      include I18nHelpers
       include RenderHelpers
 
       def test_renders_a_label
@@ -347,16 +349,6 @@ module Felt
         render_component_to_html
 
         assert_selector("input[type='#{@expected_input_type}'][autofocus]")
-      end
-
-      private
-
-      def with_translations(translations)
-        I18n.backend.translations[I18n.locale] = translations
-        yield
-      ensure
-        I18n.reload!
-        I18n.eager_load!
       end
     end
   end
