@@ -286,7 +286,7 @@ module Felt
           }
         end
 
-        p render_component_to_html
+        render_component_to_html
 
         assert_selector("p.default-error")
       end
