@@ -1,0 +1,1 @@
+rake test standard && rake clean build release
