@@ -212,6 +212,24 @@ module Felt
         assert_selector("div.specific-input-help")
       end
 
+      def test_renders_hint_from_arguments
+        @options = {hint: "This has priority over translations"}
+
+        with_translations({
+          forms: {
+            "#{@form.object_name}": {
+              "#{@attribute}": {
+                hint: "Hint from translations"
+              }
+            }
+          }
+        }) do
+          render_component_to_html
+        end
+
+        assert_text("This has priority over translations")
+      end
+
       def test_renders_hint_from_translations
         with_translations({
           forms: {
