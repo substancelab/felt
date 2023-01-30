@@ -20,6 +20,8 @@ module Felt
       # This returns the full error messages for the attribute, see
       # ActiveModel::Errors#full_messages for more details.
       def errors
+        return [] if form.object.nil?
+
         form.object.errors.full_messages_for(attribute)
       end
 
