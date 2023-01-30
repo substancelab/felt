@@ -11,7 +11,8 @@ module Felt
 
       # Returns the classes to use for the root element of the input.
       def classes
-        classes_from_configuration(:input_group, self.class.config_key)
+        @classes ||
+          classes_from_configuration(:input_group, self.class.config_key)
       end
 
       # Returns the error messages to output in the input group. Returns [] if no
@@ -81,6 +82,8 @@ module Felt
           classes_from_configuration(:hint, :default, state_key)
       end
 
+      # - classes: CSS classes to add to the wrapping input group element.
+      #
       # - hint: The hint for the input group. If not provided, the hint will be
       #   looked up in the `forms.<object_name>.<attribute>` translation. See
       #   #hint for more details. To disable the hint, pass an empty string.
@@ -100,8 +103,9 @@ module Felt
       # All remaining keyword arguments are passed to the wrapping div element
       # of the input group. See ActionView::Helpers::TagHelper#content_tag for
       # details.
-      def initialize(attribute:, form:, help: nil, hint: nil, input_options: {}, label: nil, placeholder: nil, **options)
+      def initialize(attribute:, form:, classes: nil, help: nil, hint: nil, input_options: {}, label: nil, placeholder: nil, **options)
         @attribute = attribute
+        @classes = classes
         @form = form
         @help = help
         @hint = hint

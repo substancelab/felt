@@ -347,6 +347,21 @@ module Felt
         refute_css("div[attribute]")
       end
 
+      def test_uses_classes_from_argument_for_wrapping_element
+        @options = {classes: "class-from-argument"}
+        Felt.configure do |config|
+          config.classes = {
+            input_group: {
+              "#{@component_class.config_key}": "my-input-group"
+            }
+          }
+        end
+
+        render_component_to_html
+
+        assert_css("div.class-from-argument")
+      end
+
       def test_uses_configured_classes_for_wrapping_element
         Felt.configure do |config|
           config.classes = {
