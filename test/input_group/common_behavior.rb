@@ -50,7 +50,7 @@ module Felt
               default: { # Labels for all input types
                 default: "default-label" # Default state
               },
-              "#{@component_class.config_key}": {
+              "#{@component_class.name.demodulize.underscore}": {
                 default: "specific-input-label" # Default state
               }
             }
@@ -91,7 +91,7 @@ module Felt
               default: {
                 default: "default-input-field"
               },
-              "#{@component_class.config_key}": {
+              "#{@component_class.name.demodulize.underscore}": {
                 default: "specific-input-field"
               }
             }
@@ -127,7 +127,7 @@ module Felt
         Felt.configure do |config|
           config.classes = {
             input: {
-              "#{@component_class.config_key}": {
+              "#{@component_class.name.demodulize.underscore}": {
                 invalid: "specific-input-field-with-error"
               }
             }
@@ -200,7 +200,7 @@ module Felt
               default: { # Helps for all input types
                 default: "default-help" # Default state
               },
-              "#{@component_class.config_key}": {
+              "#{@component_class.name.demodulize.underscore}": {
                 default: "specific-input-help" # Default state
               }
             }
@@ -273,7 +273,7 @@ module Felt
               default: { # hints for all input types
                 default: "default-hint" # Default state
               },
-              "#{@component_class.config_key}": {
+              "#{@component_class.name.demodulize.underscore}": {
                 default: "specific-input-hint" # Default state
               }
             }
@@ -320,7 +320,7 @@ module Felt
               default: { # errors for all input types
                 invalid: "default-error" # Default state
               },
-              "#{@component_class.config_key}": {
+              "#{@component_class.name.demodulize.underscore}": {
                 invalid: "specific-input-error" # Errors are usually shown in the invalid state
               }
             }
@@ -352,7 +352,7 @@ module Felt
         Felt.configure do |config|
           config.classes = {
             input_group: {
-              "#{@component_class.config_key}": "my-input-group"
+              "#{@component_class.name.demodulize.underscore}": "my-input-group"
             }
           }
         end
@@ -366,7 +366,7 @@ module Felt
         Felt.configure do |config|
           config.classes = {
             input_group: {
-              "#{@component_class.config_key}": "my-input-group"
+              "#{@component_class.name.demodulize.underscore}": "my-input-group"
             }
           }
         end

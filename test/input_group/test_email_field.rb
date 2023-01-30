@@ -26,6 +26,20 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
 
   include Felt::InputGroup::CommonBehavior
 
+  def test_uses_configured_classes_for_wrapping_element
+    Felt.configure do |config|
+      config.classes = {
+        input_group: {
+          "#{@component_class.name.demodulize.underscore}": "my-input-group"
+        }
+      }
+    end
+
+    render_component_to_html
+
+    assert_css("div.my-input-group")
+  end
+
   def test_uses_the_value_from_the_object
     @model.send("#{@attribute}=", "Something entirely different")
 

@@ -12,7 +12,12 @@ module Felt
       # Returns the classes to use for the root element of the input.
       def classes
         @classes ||
-          classes_from_configuration(:input_group, self.class.config_key)
+          classes_from_configuration(:input_group, config_key)
+      end
+
+      def config_key
+        raise "Must be implemented in a subclass"
+        :default
       end
 
       # Returns the error messages to output in the input group. Returns [] if no
@@ -33,7 +38,7 @@ module Felt
 
       # Returns the classes to use for the help text.
       def error_classes
-        classes_from_configuration(:error, self.class.config_key, state_key) ||
+        classes_from_configuration(:error, config_key, state_key) ||
           classes_from_configuration(:error, :default, state_key)
       end
 
@@ -56,7 +61,7 @@ module Felt
 
       # Returns the classes to use for the help text.
       def help_classes
-        classes_from_configuration(:help, self.class.config_key, state_key) ||
+        classes_from_configuration(:help, config_key, state_key) ||
           classes_from_configuration(:help, :default, state_key)
       end
 
@@ -78,7 +83,7 @@ module Felt
 
       # Returns the classes to use for the hint text.
       def hint_classes
-        classes_from_configuration(:hint, self.class.config_key, state_key) ||
+        classes_from_configuration(:hint, config_key, state_key) ||
           classes_from_configuration(:hint, :default, state_key)
       end
 
@@ -117,13 +122,13 @@ module Felt
 
       # Returns the classes to use for the input field.
       def input_classes
-        classes_from_configuration(:input, self.class.config_key, state_key) ||
+        classes_from_configuration(:input, config_key, state_key) ||
           classes_from_configuration(:input, :default, state_key)
       end
 
       # Returns the classes to use for the label field.
       def label_classes
-        classes_from_configuration(:label, self.class.config_key, state_key) ||
+        classes_from_configuration(:label, config_key, state_key) ||
           classes_from_configuration(:label, :default, state_key)
       end
 
