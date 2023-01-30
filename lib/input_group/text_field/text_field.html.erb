@@ -1,9 +1,3 @@
-<%= content_tag(:div, :class => classes, **options) do %>
-  <%= render(Felt::Label.new(:form => form, :attribute => attribute, :classes => label_classes, :text => label)) %>
-  <%= render(Felt::Hint.new(:form => form, :attribute => attribute, :classes => hint_classes, :text => hint)) %>
+<%= render(Felt::InputGroup::Wrapper.new(attribute: attribute, classes: classes, config_key: config_key, form: form, help: help, hint: hint, input_options: input_options, label: label, placeholder: placeholder, **options)) do %>
   <%= form.text_field(attribute, :class => input_classes, :placeholder => placeholder, **input_options) %>
-  <% if help? %><div class="<%= help_classes %>"><%= help %></div><% end %>
-  <% errors.each do |error| %>
-    <p class="<%= error_classes %>"><%= error %></p>
-  <% end %>
 <% end %>

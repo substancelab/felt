@@ -17,7 +17,6 @@ module Felt
 
       def config_key
         raise "Must be implemented in a subclass"
-        :default
       end
 
       # Returns the error messages to output in the input group. Returns [] if no

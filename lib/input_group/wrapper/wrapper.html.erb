@@ -1,0 +1,9 @@
+<%= content_tag(:div, :class => classes, **options) do %>
+  <%= render(Felt::Label.new(:form => form, :attribute => attribute, :classes => label_classes, :text => label)) %>
+  <%= render(Felt::Hint.new(:form => form, :attribute => attribute, :classes => hint_classes, :text => hint)) %>
+  <%= content %>
+  <% if help? %><div class="<%= help_classes %>"><%= help %></div><% end %>
+  <% errors.each do |error| %>
+    <p class="<%= error_classes %>"><%= error %></p>
+  <% end %>
+<% end %>
