@@ -8,6 +8,7 @@ require_relative "input_group/email_field"
 require_relative "input_group/password_field"
 require_relative "input_group/text_field"
 require_relative "input_group/wrapper"
+require_relative "help"
 require_relative "hint"
 require_relative "label"
 

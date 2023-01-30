@@ -2,7 +2,7 @@
   <%= render(Felt::Label.new(:form => form, :attribute => attribute, :classes => label_classes, :text => label)) %>
   <%= render(Felt::Hint.new(:form => form, :attribute => attribute, :classes => hint_classes, :text => hint)) %>
   <%= content %>
-  <% if help? %><div class="<%= help_classes %>"><%= help %></div><% end %>
+  <%= render(Felt::Help.new(:form => form, :attribute => attribute, :classes => help_classes, :text => help)) %>
   <% errors.each do |error| %>
     <p class="<%= error_classes %>"><%= error %></p>
   <% end %>
