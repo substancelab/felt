@@ -25,4 +25,11 @@ class Felt::InputGroup::PasswordFieldTest < ViewComponent::TestCase
   end
 
   include Felt::InputGroup::CommonBehavior
+
+  def test_uses_a_specified_value
+    @options = {input_options: {value: "This value"}}
+    render_component_to_html
+
+    assert_selector("input[type='#{@expected_input_type}'][name='#{@expected_input_name}'][value='This value']")
+  end
 end
