@@ -31,7 +31,7 @@ class Felt::InputGroup::CheckboxFieldTest < ViewComponent::TestCase
 
     render_component_to_html
 
-    assert(page.has_field?(@expected_input_name, with: "1"))
+    assert_input(page, @expected_input_name, with: "1")
   end
 
   def test_accepts_a_specific_checked_value
@@ -39,7 +39,7 @@ class Felt::InputGroup::CheckboxFieldTest < ViewComponent::TestCase
 
     render_component_to_html
 
-    assert(page.has_field?(@expected_input_name, with: "This value"))
+    assert_input(page, @expected_input_name, with: "This value")
   end
 
   def test_accepts_a_specific_unchecked_value
@@ -50,7 +50,7 @@ class Felt::InputGroup::CheckboxFieldTest < ViewComponent::TestCase
     # The unchecked value is added in a hidden input field that mimics the
     # visible checkbox field to ensure a value is passed even when the checbox
     # isn't checked.
-    assert(page.has_field?(@expected_input_name, type: "hidden", with: "That value"))
+    assert_input(page, @expected_input_name, type: "hidden", with: "That value")
   end
 
   def test_checks_the_checkbox_if_value_is_truthy
@@ -59,7 +59,7 @@ class Felt::InputGroup::CheckboxFieldTest < ViewComponent::TestCase
     render_component_to_html
 
     assert_selector("input[type='checkbox'][checked='checked']")
-    assert(page.has_field?(@expected_input_name, with: "1"))
+    assert_input(page, @expected_input_name, with: "1")
   end
 
   def test_unchecks_the_checkbox_if_value_is_falsey
@@ -68,5 +68,17 @@ class Felt::InputGroup::CheckboxFieldTest < ViewComponent::TestCase
     render_component_to_html
 
     refute_selector("input[type='checkbox'][checked='checked']")
+  end
+
+  private
+
+  def assert_input(page, name, options = {})
+    assert(page.has_field?(name, **options))
+  rescue Minitest::Assertion
+    html = page.native.to_html
+    raise \
+      Minitest::Assertion,
+      "Expected to find an input field named #{name.inspect} with " \
+      "#{options.inspect} in \n\n#{html}\n\nBut didn't."
   end
 end
