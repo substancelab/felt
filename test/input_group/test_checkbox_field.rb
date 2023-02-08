@@ -34,6 +34,25 @@ class Felt::InputGroup::CheckboxFieldTest < ViewComponent::TestCase
     assert(page.has_field?(@expected_input_name, with: "1"))
   end
 
+  def test_accepts_a_specific_checked_value
+    @options = {input_options: {checked_value: "This value"}}
+
+    render_component_to_html
+
+    assert(page.has_field?(@expected_input_name, with: "This value"))
+  end
+
+  def test_accepts_a_specific_unchecked_value
+    @options = {input_options: {unchecked_value: "That value"}}
+
+    render_component_to_html
+
+    # The unchecked value is added in a hidden input field that mimics the
+    # visible checkbox field to ensure a value is passed even when the checbox
+    # isn't checked.
+    assert(page.has_field?(@expected_input_name, type: "hidden", with: "That value"))
+  end
+
   def test_checks_the_checkbox_if_value_is_truthy
     @model.send("#{@attribute}=", true)
 

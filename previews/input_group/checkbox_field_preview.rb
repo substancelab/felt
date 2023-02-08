@@ -50,6 +50,12 @@ module InputGroup
       render(Felt::InputGroup::CheckboxField.new(form: form, attribute: :released, input_options: {autofocus: true}))
     end
 
+    def with_specific_values
+      model = Game.new
+      form = build_form(model)
+      render(Felt::InputGroup::CheckboxField.new(form: form, attribute: :released, input_options: {checked_value: "42"}))
+    end
+
     def with_everything
       model = Game.new
       form = build_form(model)

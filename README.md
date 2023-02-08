@@ -101,6 +101,8 @@ What does a form control or an input group consist of?
 
 * We use sidecar folders for all components.
 
+* When in doubt, fail towards Rails. For example, the Rails option to set the value of a checkbox input field is `checked_value`. In my view it would make more sense to use `value`, but for an easier learning curve, using the terms from Rails is probably best.
+
 ## To Do
 
 * [ ] Remove hardcoded classes from CheckboxField...
