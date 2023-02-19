@@ -178,7 +178,24 @@ module Felt
           render_component_to_html
         end
 
-        assert_text("Help from translations")
+        assert_selector("div div", text: "Help from translations")
+      end
+
+      def test_does_not_renders_help_from_translations
+        @options = {help: false}
+        with_translations({
+          forms: {
+            "#{@form.object_name}": {
+              "#{@attribute}": {
+                help: "Help from translations"
+              }
+            }
+          }
+        }) do
+          render_component_to_html
+        end
+
+        refute_selector("div div", text: "Help from translations")
       end
 
       def test_it_uses_classes_configured_for_all_helps

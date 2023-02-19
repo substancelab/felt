@@ -49,6 +49,8 @@ module Felt
       # 1. The help argument passed to the component.
       # 2. The `help` key in the `forms.<object_name>.<attribute>` translation.
       def help
+        return false if @help == false
+
         @help ||=
           translate("help")
       end
@@ -90,6 +92,10 @@ module Felt
       end
 
       # - classes: CSS classes to add to the wrapping input group element.
+      #
+      # - help: The help for the input group. If not provided, the help will be
+      #   looked up in the `forms.<object_name>.<attribute>` translation. See
+      #   #help for more details. To not render a help text, pass +false+.
       #
       # - hint: The hint for the input group. If not provided, the hint will be
       #   looked up in the `forms.<object_name>.<attribute>` translation. See
