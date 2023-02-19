@@ -134,7 +134,8 @@ module Felt
       # Returns the label for the input group. If no label is configured, returns
       # nil.
       #
-      # Labels are looked up in the following order:
+      # Labels are looked up in the following order, the first non-nil value is
+      # used:
       #
       # 1. The label argument passed to the component.
       # 2. The `label` key in the `forms.<object_name>.<attribute>` translation.
