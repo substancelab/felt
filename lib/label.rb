@@ -17,7 +17,7 @@ module Felt
     #
     # - text: The label text to show. If not provided, the text will be
     #   looked up in the `forms.<object_name>.<attribute>` translation. See
-    #   #label for more details. To disable the label, pass false.
+    #   #label for more details. To not render the label, pass false.
     #
     # All remaining keyword arguments are passed to the label element. See
     # ActionView::Helpers::FormBuilder#label for details.

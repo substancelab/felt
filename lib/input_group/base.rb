@@ -137,14 +137,13 @@ module Felt
       # Labels are looked up in the following order, the first non-nil value is
       # used:
       #
-      # 1. The label argument passed to the component. To disable the label,
-      #    pass an empty string.
+      # 1. The label argument passed to the component.
       # 2. The `label` key in the `forms.<object_name>.<attribute>` translation.
       # 3. The translation value found under
       #    `helpers.label.<modelname>.<attribute>` (like with
       #    ActionView::Helpers::FormBuilder#label).
       #
-      # To disable the label, pass +false+ as the label argument.
+      # To not render the label, pass +false+ as the label argument.
       def label
         return @label if @label == false
 
