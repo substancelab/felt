@@ -96,8 +96,8 @@ module Felt
       #
       # - label: The label text for the input group. If not provided, the text
       #   will be looked up in the `forms.<object_name>.<attribute>`
-      #   translation. See #label for more details. To disable the label, pass
-      #   an empty string.
+      #   translation. See #label for more details. To not render the label,
+      #   pass +false+.
       #
       # - placeholder: The placeholder for the input field. If not provided, the
       #   placeholder will be looked up in the `forms.<object_name>.<attribute>`
@@ -131,17 +131,23 @@ module Felt
           classes_from_configuration(:label, :default, state_key)
       end
 
-      # Returns the label for the input group. If no label is configured, returns
-      # nil.
+      # Returns the label for the input group. If no label is configured,
+      # returns nil.
       #
       # Labels are looked up in the following order, the first non-nil value is
       # used:
       #
-      # 1. The label argument passed to the component.
+      # 1. The label argument passed to the component. To disable the label,
+      #    pass an empty string.
       # 2. The `label` key in the `forms.<object_name>.<attribute>` translation.
-      # 3. The translation value found under `helpers.label.<modelname>.<attribute>`
-      #    (like with ActionView::Helpers::FormBuilder#label).
+      # 3. The translation value found under
+      #    `helpers.label.<modelname>.<attribute>` (like with
+      #    ActionView::Helpers::FormBuilder#label).
+      #
+      # To disable the label, pass +false+ as the label argument.
       def label
+        return @label if @label == false
+
         @label ||=
           translate("label")
       end

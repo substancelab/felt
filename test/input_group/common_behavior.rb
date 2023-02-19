@@ -21,6 +21,14 @@ module Felt
         assert_selector("label[for=#{@expected_input_id}]", text: "This label")
       end
 
+      def test_renders_no_label
+        @options = {label: false}
+
+        render_component_to_html
+
+        assert_no_selector("label[for=#{@expected_input_id}]")
+      end
+
       def test_it_does_not_include_a_label_inside_the_label
         render_component_to_html
 
