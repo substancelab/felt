@@ -64,13 +64,16 @@ module Felt
           classes_from_configuration(:help, :default, state_key)
       end
 
-      # Returns the hint for the input group. If no hint is configured, returns nil.
+      # Returns the hint for the input group. If no hint is configured, returns
+      # nil. If hint has explicitly been set to false, returns false.
       #
       # Hints are looked up in the following order:
       #
       # 1. The hint argument passed to the component.
       # 2. The `hint` key in the `forms.<object_name>.<attribute>` translation.
       def hint
+        return false if @hint == false
+
         @hint ||=
           translate("hint")
       end
@@ -90,7 +93,7 @@ module Felt
       #
       # - hint: The hint for the input group. If not provided, the hint will be
       #   looked up in the `forms.<object_name>.<attribute>` translation. See
-      #   #hint for more details. To disable the hint, pass an empty string.
+      #   #hint for more details. To not render a hint, pass +false+.
       #
       # - input_options: The options to pass directly to the input field.
       #

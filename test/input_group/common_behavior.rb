@@ -251,7 +251,25 @@ module Felt
           render_component_to_html
         end
 
-        assert_text("Hint from translations")
+        assert_selector(":root div", text: "Hint from translations")
+      end
+
+      def test_does_not_render_a_hint_from_translations
+        @options = {hint: false}
+
+        with_translations({
+          forms: {
+            "#{@form.object_name}": {
+              "#{@attribute}": {
+                hint: "Hint from translations"
+              }
+            }
+          }
+        }) do
+          render_component_to_html
+        end
+
+        refute_selector(":root div", text: "Hint from translations")
       end
 
       def test_it_uses_classes_configured_for_all_hints

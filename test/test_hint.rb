@@ -35,6 +35,22 @@ class Felt::HintTest < ViewComponent::TestCase
     refute_selector("div")
   end
 
+  test "renders nothing when text is blank" do
+    @options = {text: ""}
+
+    render_component_to_html
+
+    refute_selector("div")
+  end
+
+  test "renders nothing when text is false" do
+    @options = {text: false}
+
+    render_component_to_html
+
+    refute_selector("div")
+  end
+
   test "renders hint text from translations" do
     with_translations({
       forms: {
