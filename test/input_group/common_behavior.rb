@@ -21,6 +21,14 @@ module Felt
         assert_selector("label[for=#{@expected_input_id}]", text: "This label")
       end
 
+      def test_renders_no_label
+        @options = {label: false}
+
+        render_component_to_html
+
+        assert_no_selector("label[for=#{@expected_input_id}]")
+      end
+
       def test_it_does_not_include_a_label_inside_the_label
         render_component_to_html
 
@@ -170,7 +178,24 @@ module Felt
           render_component_to_html
         end
 
-        assert_text("Help from translations")
+        assert_selector("div div", text: "Help from translations")
+      end
+
+      def test_does_not_renders_help_from_translations
+        @options = {help: false}
+        with_translations({
+          forms: {
+            "#{@form.object_name}": {
+              "#{@attribute}": {
+                help: "Help from translations"
+              }
+            }
+          }
+        }) do
+          render_component_to_html
+        end
+
+        refute_selector("div div", text: "Help from translations")
       end
 
       def test_it_uses_classes_configured_for_all_helps
@@ -243,7 +268,25 @@ module Felt
           render_component_to_html
         end
 
-        assert_text("Hint from translations")
+        assert_selector(":root div", text: "Hint from translations")
+      end
+
+      def test_does_not_render_a_hint_from_translations
+        @options = {hint: false}
+
+        with_translations({
+          forms: {
+            "#{@form.object_name}": {
+              "#{@attribute}": {
+                hint: "Hint from translations"
+              }
+            }
+          }
+        }) do
+          render_component_to_html
+        end
+
+        refute_selector(":root div", text: "Hint from translations")
       end
 
       def test_it_uses_classes_configured_for_all_hints

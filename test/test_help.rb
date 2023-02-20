@@ -7,7 +7,7 @@ require "active_model"
 require "i18n_helpers"
 require "render_helpers"
 
-require "hint"
+require "help"
 
 class Game
   include ActiveModel::API
@@ -15,7 +15,7 @@ class Game
   attr_accessor :title
 end
 
-class Felt::HintTest < ViewComponent::TestCase
+class Felt::HelpTest < ViewComponent::TestCase
   include I18nHelpers
   include RenderHelpers
 
@@ -23,7 +23,7 @@ class Felt::HintTest < ViewComponent::TestCase
     @attribute = :title
     @model = Game.new
     @form = build_form(@model)
-    @component_class = Felt::Hint
+    @component_class = Felt::Help
 
     @expected_input_id = "game_title"
     @expected_input_name = "game[title]"
@@ -51,12 +51,12 @@ class Felt::HintTest < ViewComponent::TestCase
     refute_selector("div")
   end
 
-  test "renders hint text from translations" do
+  test "renders help text from translations" do
     with_translations({
       forms: {
         "#{@form.object_name}": {
           "#{@attribute}": {
-            hint: "Hint from translations"
+            help: "Help from translations"
           }
         }
       }
@@ -64,24 +64,24 @@ class Felt::HintTest < ViewComponent::TestCase
       render_component_to_html
     end
 
-    assert_selector("div", text: "Hint from translations")
+    assert_selector("div", text: "Help from translations")
   end
 
-  def test_renders_provided_hint
-    @options = {text: "Hint text"}
+  def test_renders_provided_help
+    @options = {text: "Help text"}
 
     render_component_to_html
 
-    assert_selector("div", text: "Hint text")
+    assert_selector("div", text: "Help text")
   end
 
-  def test_uses_configured_classes_for_hint
-    @options = {text: "Hint text"}
+  def test_uses_configured_classes_for_help
+    @options = {text: "Help text"}
     Felt.configure do |config|
       config.classes = {
-        hint: {
+        help: {
           default: {
-            default: "default-hint"
+            default: "default-help"
           }
         }
       }
@@ -89,16 +89,16 @@ class Felt::HintTest < ViewComponent::TestCase
 
     render_component_to_html
 
-    assert_selector("div.default-hint")
+    assert_selector("div.default-help")
   end
 
   def test_uses_specified_classes
-    @options = {classes: "custom-hint", text: "Hint text"}
+    @options = {classes: "custom-help", text: "Help text"}
     Felt.configure do |config|
       config.classes = {
-        hint: {
+        help: {
           default: {
-            default: "default-hint"
+            default: "default-help"
           }
         }
       }
@@ -106,6 +106,6 @@ class Felt::HintTest < ViewComponent::TestCase
 
     render_component_to_html
 
-    assert_selector("div.custom-hint")
+    assert_selector("div.custom-help")
   end
 end

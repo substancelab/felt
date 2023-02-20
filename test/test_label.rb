@@ -13,6 +13,7 @@ class Game
 end
 
 class Felt::LabelTest < ViewComponent::TestCase
+  include I18nHelpers
   include RenderHelpers
 
   setup do
@@ -25,10 +26,50 @@ class Felt::LabelTest < ViewComponent::TestCase
     @expected_input_name = "game[title]"
   end
 
-  test "renders a label" do
+  test "renders a label with the attribute name" do
     render_component_to_html
 
     assert_selector("label[for=#{@expected_input_id}]", text: @attribute.to_s.titlecase)
+  end
+
+  test "renders a label with the attribute name when given a blank string" do
+    @options = {text: ""}
+
+    render_component_to_html
+
+    assert_selector("label[for=#{@expected_input_id}]", text: @attribute.to_s.titlecase)
+  end
+
+  test "renders a label with text from locale in the helpers scope" do
+    with_translations({
+      helpers: {
+        label: {
+          game: {
+            @attribute => "From helpers"
+          }
+        }
+      }
+    }) do
+      render_component_to_html
+    end
+
+    assert_selector("label[for=#{@expected_input_id}]", text: "From helpers")
+  end
+
+  test "renders a label with text from locale in the activemodel scope" do
+    with_translations({
+      activemodel: {
+        attributes: {
+          game: {
+            @attribute => "From activemodel"
+          }
+        }
+      }
+    }) do
+      render_component_to_html
+    end
+
+    assert_selector("label[for=#{@expected_input_id}]", text: "From activemodel")
   end
 
   def test_renders_provided_label
@@ -37,6 +78,14 @@ class Felt::LabelTest < ViewComponent::TestCase
     render_component_to_html
 
     assert_selector("label[for=#{@expected_input_id}]", text: "This label")
+  end
+
+  def test_does_not_render
+    @options = {text: false}
+
+    render_component_to_html
+
+    refute_selector("label[for=#{@expected_input_id}]")
   end
 
   def test_uses_configured_classes_for_label

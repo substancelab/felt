@@ -17,7 +17,8 @@ module Felt
     #
     # - text: The help text to show. If not provided, the text will be looked up
     #   in the `forms.<object_name>.<attribute>` translation. See #help for more
-    #   details. To disable the help, pass an empty string.
+    #   details. To not render the hint, pass +false+ (or any object that
+    #   responds +true+ to +blank?+).
     #
     # All remaining keyword arguments are passed to the help element. See
     # ActionView::Helpers::FormBuilder#help for details.
@@ -38,12 +39,15 @@ module Felt
     #
     # Help texts are looked up in the following order:
     #
-    # 1. The text argument passed to the component.
+    # 1. The text argument passed to the component. Pass +false+ to not render
+    #    the help element.
     # 2. The `help` key in the `forms.<object_name>.<attribute>` translation.
     # 3. The translation value found under
     #    `helpers.help.<modelname>.<attribute>` (like with
     #    ActionView::Helpers::FormBuilder#help).
     def text
+      return false if @text == false
+
       @text ||= translate("help")
     end
 
