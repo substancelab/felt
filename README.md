@@ -22,7 +22,7 @@ Or install it yourself as:
 
 ```
 <% form_for(person) do |form| %>
-  <%= render(TextFieldComponent.new(form, :name)) %>
+  <%= render(Felt::InputGroup::TextField.new(:form => form, :attribute => :name)) %>
 <% end %>
 ```
 
