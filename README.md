@@ -34,7 +34,7 @@ To configure the classes you want to apply to your markup, use an initializer. F
 
 ```
 # config/initializers/felt.rb
-Felt.classes = {
+Felt.configuration.classes = {
   :input_group => {
     :error => "mt-2 text-sm text-red-600 dark:text-red-500",
     :hint => "mt-2 text-sm text-gray-500 dark:text-gray-400",
