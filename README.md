@@ -115,6 +115,7 @@ What does a form control or an input group consist of?
 * [ ] Create a standard set of styles that can be distributed with the gem, so it looks proper - perhaps based on Flowbite?
 * [ ] Should I18n scope be "felt", not "form"?
 
+
 ## Glossary and terms
 
 | Felt        | Base Web      | Bootstrap    | Flowbite    | GOV UK     | Tailwind UI |
@@ -136,6 +137,9 @@ What does a form control or an input group consist of?
 
 * https://github.com/heartcombo/simple_form
 * https://github.com/pantographe/view_component-form
+* https://fly.io/ruby-dispatch/better-rails-forms-with-superform/
+* https://github.com/pantographe/view_component-form
+* https://github.com/pinzonjulian/actionview_attribute_builders
 
 ## Development
 
