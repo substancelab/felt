@@ -151,7 +151,7 @@ module Felt
         @options = {help: "This has priority over translations"}
 
         with_translations({
-          forms: {
+          felt: {
             "#{@form.object_name}": {
               "#{@attribute}": {
                 help: "Help from translations"
@@ -167,7 +167,7 @@ module Felt
 
       def test_renders_help_from_translations
         with_translations({
-          forms: {
+          felt: {
             "#{@form.object_name}": {
               "#{@attribute}": {
                 help: "Help from translations"
@@ -184,7 +184,7 @@ module Felt
       def test_does_not_renders_help_from_translations
         @options = {help: false}
         with_translations({
-          forms: {
+          felt: {
             "#{@form.object_name}": {
               "#{@attribute}": {
                 help: "Help from translations"
@@ -241,7 +241,7 @@ module Felt
         @options = {hint: "This has priority over translations"}
 
         with_translations({
-          forms: {
+          felt: {
             "#{@form.object_name}": {
               "#{@attribute}": {
                 hint: "Hint from translations"
@@ -257,7 +257,7 @@ module Felt
 
       def test_renders_hint_from_translations
         with_translations({
-          forms: {
+          felt: {
             "#{@form.object_name}": {
               "#{@attribute}": {
                 hint: "Hint from translations"
@@ -275,7 +275,7 @@ module Felt
         @options = {hint: false}
 
         with_translations({
-          forms: {
+          felt: {
             "#{@form.object_name}": {
               "#{@attribute}": {
                 hint: "Hint from translations"

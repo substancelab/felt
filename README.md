@@ -113,7 +113,6 @@ What does a form control or an input group consist of?
 * [ ] Support all Rails form builder tags
 * [ ] ARIA!
 * [ ] Create a standard set of styles that can be distributed with the gem, so it looks proper - perhaps based on Flowbite?
-* [ ] Should I18n scope be "felt", not "form"?
 
 
 ## Glossary and terms

@@ -48,7 +48,7 @@ class Felt::HintTest < ViewComponent::TestCase
 
   test "renders hint text from translations" do
     with_translations({
-      forms: {
+      felt: {
         "#{@form.object_name}": {
           "#{@attribute}": {
             hint: "Hint from translations"

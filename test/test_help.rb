@@ -48,7 +48,7 @@ class Felt::HelpTest < ViewComponent::TestCase
 
   test "renders help text from translations" do
     with_translations({
-      forms: {
+      felt: {
         "#{@form.object_name}": {
           "#{@attribute}": {
             help: "Help from translations"

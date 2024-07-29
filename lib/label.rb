@@ -16,7 +16,7 @@ module Felt
     # - classes: Classes to add to the label element.
     #
     # - text: The label text to show. If not provided, the text will be
-    #   looked up in the `forms.<object_name>.<attribute>` translation. See
+    #   looked up in the `felt.<object_name>.<attribute>` translation. See
     #   #label for more details. To not render the label, pass false.
     #
     # All remaining keyword arguments are passed to the label element. See
@@ -40,7 +40,7 @@ module Felt
     #
     # 1. The text argument passed to the component. Pass +false+ to not render
     #    the label.
-    # 2. The `label` key in the `forms.<object_name>.<attribute>` translation.
+    # 2. The `label` key in the `felt.<object_name>.<attribute>` translation.
     # 3. The translation value found under
     #    `helpers.label.<modelname>.<attribute>` (like with
     #    ActionView::Helpers::FormBuilder#label).
@@ -60,7 +60,7 @@ module Felt
     end
 
     def translation_scope
-      [:forms, form.object_name, attribute].join(".")
+      [:felt, form.object_name, attribute].join(".")
     end
   end
 end

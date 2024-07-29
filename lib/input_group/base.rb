@@ -47,7 +47,7 @@ module Felt
       # Help text is looked up in the following order:
       #
       # 1. The help argument passed to the component.
-      # 2. The `help` key in the `forms.<object_name>.<attribute>` translation.
+      # 2. The `help` key in the `felt.<object_name>.<attribute>` translation.
       def help
         return false if @help == false
 
@@ -72,7 +72,7 @@ module Felt
       # Hints are looked up in the following order:
       #
       # 1. The hint argument passed to the component.
-      # 2. The `hint` key in the `forms.<object_name>.<attribute>` translation.
+      # 2. The `hint` key in the `felt.<object_name>.<attribute>` translation.
       def hint
         return false if @hint == false
 
@@ -94,22 +94,22 @@ module Felt
       # - classes: CSS classes to add to the wrapping input group element.
       #
       # - help: The help for the input group. If not provided, the help will be
-      #   looked up in the `forms.<object_name>.<attribute>` translation. See
+      #   looked up in the `felt.<object_name>.<attribute>` translation. See
       #   #help for more details. To not render a help text, pass +false+.
       #
       # - hint: The hint for the input group. If not provided, the hint will be
-      #   looked up in the `forms.<object_name>.<attribute>` translation. See
+      #   looked up in the `felt.<object_name>.<attribute>` translation. See
       #   #hint for more details. To not render a hint, pass +false+.
       #
       # - input_options: The options to pass directly to the input field.
       #
       # - label: The label text for the input group. If not provided, the text
-      #   will be looked up in the `forms.<object_name>.<attribute>`
+      #   will be looked up in the `felt.<object_name>.<attribute>`
       #   translation. See #label for more details. To not render the label,
       #   pass +false+.
       #
       # - placeholder: The placeholder for the input field. If not provided, the
-      #   placeholder will be looked up in the `forms.<object_name>.<attribute>`
+      #   placeholder will be looked up in the `felt.<object_name>.<attribute>`
       #   translation. See #placeholder for more details. To disable the
       #   placeholder, pass an empty string.
       #
@@ -147,7 +147,7 @@ module Felt
       # used:
       #
       # 1. The label argument passed to the component.
-      # 2. The `label` key in the `forms.<object_name>.<attribute>` translation.
+      # 2. The `label` key in the `felt.<object_name>.<attribute>` translation.
       # 3. The translation value found under
       #    `helpers.label.<modelname>.<attribute>` (like with
       #    ActionView::Helpers::FormBuilder#label).
@@ -171,7 +171,7 @@ module Felt
       # Placeholders are looked up in the following order:
       #
       # 1. The placeholder argument passed to the component.
-      # 2. The `placeholder` key in the `forms.<object_name>.<attribute>`
+      # 2. The `placeholder` key in the `felt.<object_name>.<attribute>`
       #    translation.
       def placeholder
         @placeholder ||=
@@ -208,7 +208,7 @@ module Felt
       end
 
       def translation_scope
-        [:forms, form.object_name, attribute].join(".")
+        [:felt, form.object_name, attribute].join(".")
       end
     end
   end
