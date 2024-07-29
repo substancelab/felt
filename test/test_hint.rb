@@ -6,14 +6,9 @@ require "active_model"
 
 require "i18n_helpers"
 require "render_helpers"
+require "support/game"
 
 require "hint"
-
-class Game
-  include ActiveModel::API
-
-  attr_accessor :title
-end
 
 class Felt::HintTest < ViewComponent::TestCase
   include I18nHelpers

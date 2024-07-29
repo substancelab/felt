@@ -4,13 +4,9 @@ require "test_helper"
 require "view_component/test_case"
 require "active_model"
 
+require "support/game"
+
 require "label"
-
-class Game
-  include ActiveModel::API
-
-  attr_accessor :title
-end
 
 class Felt::LabelTest < ViewComponent::TestCase
   include I18nHelpers
