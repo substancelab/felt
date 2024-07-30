@@ -41,7 +41,7 @@ class Felt::InputGroup::EmailFieldTest < ViewComponent::TestCase
   end
 
   def test_uses_the_value_from_the_object
-    @model.send("#{@attribute}=", "Something entirely different")
+    @model.send(:"#{@attribute}=", "Something entirely different")
 
     render_component_to_html
 

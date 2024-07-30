@@ -27,7 +27,7 @@ class Felt::InputGroup::CheckboxFieldTest < ViewComponent::TestCase
   include Felt::InputGroup::CommonBehavior
 
   def test_defaults_the_value_to_1
-    @model.send("#{@attribute}=", "Something entirely different")
+    @model.send(:"#{@attribute}=", "Something entirely different")
 
     render_component_to_html
 
@@ -54,7 +54,7 @@ class Felt::InputGroup::CheckboxFieldTest < ViewComponent::TestCase
   end
 
   def test_checks_the_checkbox_if_value_is_truthy
-    @model.send("#{@attribute}=", true)
+    @model.send(:"#{@attribute}=", true)
 
     render_component_to_html
 
@@ -63,7 +63,7 @@ class Felt::InputGroup::CheckboxFieldTest < ViewComponent::TestCase
   end
 
   def test_unchecks_the_checkbox_if_value_is_falsey
-    @model.send("#{@attribute}=", false)
+    @model.send(:"#{@attribute}=", false)
 
     render_component_to_html
 

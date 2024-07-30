@@ -27,7 +27,7 @@ class Felt::InputGroup::TextFieldTest < ViewComponent::TestCase
   include Felt::InputGroup::CommonBehavior
 
   def test_uses_the_value_from_the_object
-    @model.send("#{@attribute}=", "Something entirely different")
+    @model.send(:"#{@attribute}=", "Something entirely different")
 
     render_component_to_html
 
