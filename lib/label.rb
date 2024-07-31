@@ -5,6 +5,8 @@ require "view_component"
 module Felt
   # Renders a label element for a form input.
   class Label < ViewComponent::Base
+    include Felt::Translatable
+
     attr_reader :attribute, :form, :options
 
     # Returns the classes to use for the label element
@@ -54,10 +56,6 @@ module Felt
     end
 
     private
-
-    def translate(key)
-      I18n.translate(key, default: nil, scope: translation_scope)
-    end
 
     def translation_scope
       [:felt, form.object_name, attribute].join(".")

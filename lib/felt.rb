@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "felt/configuration"
+require_relative "felt/translatable"
 require_relative "felt/version"
 
 require_relative "input_group/checkbox_field"

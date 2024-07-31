@@ -7,6 +7,8 @@ module Felt
     # Renders a stacked input group element. This is the base class for all input
     # groups and should not be instantiated directly.
     class Base < ViewComponent::Base
+      include Felt::Translatable
+
       attr_reader :attribute, :form, :input_options, :options
 
       # Returns the classes to use for the root element of the input.
@@ -201,10 +203,6 @@ module Felt
         else
           :default
         end
-      end
-
-      def translate(key)
-        I18n.translate(key, default: nil, scope: translation_scope)
       end
 
       def translation_scope
