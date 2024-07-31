@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "felt/configurable"
+require "felt/translatable"
 require "view_component"
 
 module Felt
