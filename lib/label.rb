@@ -5,14 +5,14 @@ require "view_component"
 module Felt
   # Renders a label element for a form input.
   class Label < ViewComponent::Base
+    include Felt::Configurable
     include Felt::Translatable
 
     attr_reader :attribute, :form, :options
 
     # Returns the classes to use for the label element
     def classes
-      @classes ||
-        Felt.configuration.classes.dig(:label, :default, :default)
+      @classes || classes_from_configuration(:label, :default, :default)
     end
 
     # - classes: Classes to add to the label element.

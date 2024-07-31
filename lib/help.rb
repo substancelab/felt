@@ -5,14 +5,14 @@ require "view_component"
 module Felt
   # Renders a help element for a form input.
   class Help < ViewComponent::Base
+    include Felt::Configurable
     include Felt::Translatable
 
     attr_reader :attribute, :form, :options
 
     # Returns the classes to use for the help element
     def classes
-      @classes ||
-        Felt.configuration.classes.dig(:help, :default, :default)
+      @classes || classes_from_configuration(:help, :default, :default)
     end
 
     # - classes: Classes to add to the help element.

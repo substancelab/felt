@@ -7,6 +7,7 @@ module Felt
     # Renders a stacked input group element. This is the base class for all input
     # groups and should not be instantiated directly.
     class Base < ViewComponent::Base
+      include Felt::Configurable
       include Felt::Translatable
 
       attr_reader :attribute, :form, :input_options, :options
@@ -186,12 +187,6 @@ module Felt
       end
 
       private
-
-      # Returns classes configured at the given path under the classes key in
-      # the configuration.
-      def classes_from_configuration(*path)
-        Felt.configuration.classes.dig(*path)
-      end
 
       # Returns the key to use as the state part when looking up classes in
       # configuration.
